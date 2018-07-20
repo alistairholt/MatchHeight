@@ -58,14 +58,7 @@ function process() {
 	const maxHeightInRow = Math.max( ...processingTargets.map( ( item ) => item.height ) );
 
 	processingTargets.forEach( ( item ) => {
-
-		const paddingAndBorder =
-			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-top' ),         10 ) +
-			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-bottom' ),      10 ) +
-			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-top-width' ),    10 ) +
-			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-bottom-width' ), 10 );
-		item.el.style.minHeight = `${ maxHeightInRow - paddingAndBorder }px`;
-
+		item.el.style.minHeight = `${ maxHeightInRow }px`;
 	} );
 
 	remains.splice( 0, processingTargets.length );

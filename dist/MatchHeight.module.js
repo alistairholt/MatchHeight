@@ -4,31 +4,6 @@
  * https://github.com/yomotsu/MatchHeight
  * Released under the MIT License.
  */
-function throttle(fn, threshhold) {
-
-	var last = void 0,
-	    deferTimer = void 0;
-
-	return function () {
-
-		var now = Date.now();
-
-		if (last && now < last + threshhold) {
-
-			clearTimeout(deferTimer);
-			deferTimer = setTimeout(function () {
-
-				last = now;
-				fn();
-			}, threshhold);
-		} else {
-
-			last = now;
-			fn();
-		}
-	};
-}
-
 var initialized = false;
 var elements = void 0;
 var remains = void 0;
@@ -86,29 +61,12 @@ function process() {
 	}));
 
 	processingTargets.forEach(function (item) {
-
-		var paddingAndBorder = parseFloat(window.getComputedStyle(item.el).getPropertyValue('padding-top'), 10) + parseFloat(window.getComputedStyle(item.el).getPropertyValue('padding-bottom'), 10) + parseFloat(window.getComputedStyle(item.el).getPropertyValue('border-top-width'), 10) + parseFloat(window.getComputedStyle(item.el).getPropertyValue('border-bottom-width'), 10);
-		item.el.style.minHeight = maxHeightInRow - paddingAndBorder + 'px';
+		item.el.style.minHeight = maxHeightInRow + 'px';
 	});
 
 	remains.splice(0, processingTargets.length);
 
 	if (0 < remains.length) process();
 }
-
-var throttledUpdate = throttle(MatchHeight$1.update, 200);
-
-window.addEventListener('DOMContentLoaded', function onDomReady() {
-
-	MatchHeight$1.init();
-	window.removeEventListener('DOMContentLoaded', onDomReady);
-});
-window.addEventListener('load', function onLoad() {
-
-	MatchHeight$1.update();
-	window.removeEventListener('load', onLoad);
-});
-
-window.addEventListener('resize', throttledUpdate);
 
 export default MatchHeight$1;
